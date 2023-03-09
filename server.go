@@ -64,6 +64,8 @@ func (s *ServerInfo) SendHeartBeat() {
 		fmt.Println(response.Errmsg)
 	}
 
+	fmt.Printf("send heartbeat to center successful")
+
 }
 
 // collect traffic by update the used info
@@ -76,9 +78,8 @@ func (s *ServerNode) UpdateTrafficLoad(delta int64) {
 }
 
 func (s *ServerNode) cronTaskToUploadTraffic() {
-	for {
-		time.Sleep(time.Minute * 10)
-
+	c := time.Tick(time.Second * 10)
+	for _ = range c {
 		if s.server.Used > s.server.TotalTraffic {
 			continue
 		}

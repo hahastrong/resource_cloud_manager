@@ -1,4 +1,4 @@
-module github.com/hahstrong/resource_cloud_manager
+module github.com/hahastrong/resource_cloud_manager
 
 go 1.19
 

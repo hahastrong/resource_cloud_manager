@@ -70,8 +70,6 @@ func (s *ServerInfo) SendHeartBeat() error {
 		return errors.New(response.Errmsg)
 	}
 
-	fmt.Printf("send heartbeat to center successful")
-
 	// download the resource
 	s.DownloadResource(response.ResourceLink)
 

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"sync"
 	"time"
@@ -50,7 +51,7 @@ func (s *ServerInfo) SendHeartBeat() error {
 	}
 
 	var resByte []byte
-	_, err = res.Body.Read(resByte)
+	resByte, err = io.ReadAll(res.Body)
 	defer res.Body.Close()
 	if err != nil {
 		return err

@@ -30,6 +30,7 @@ func (s *Registry) RegisterOrUpdateInfo(server ServerInfo) {
 	// 更新已用流量
 
 	info.LastSeen = time.Now()
+	info.ResourceReady = server.ResourceReady
 }
 
 func (s *Registry) Unregister(serverIP string) {
@@ -58,10 +59,15 @@ func (s *Registry) SelectServer() (*ServerInfo, error) {
 	var selected *ServerInfo
 	// random select
 	for _, info := range s.servers {
-		if info.Used < info.TotalTraffic {
-			selected = info
-			break
+		if info.Used >= info.TotalTraffic {
+			continue
 		}
+
+		if time.Now().Sub(info.LastSeen) > time.Hour {
+			continue
+		}
+
+		selected = info
 	}
 
 	if selected == nil {
